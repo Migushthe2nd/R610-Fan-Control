@@ -67,7 +67,6 @@ _Note: The RPM may differ from model to model_
 ---
 
 **Disclaimer**
-
 TLDR; I take _NO_ responsibility if you mess up anything.
 
 ---
