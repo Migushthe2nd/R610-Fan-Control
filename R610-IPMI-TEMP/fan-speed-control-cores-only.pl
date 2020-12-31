@@ -135,7 +135,7 @@ sub set_fans_servo {
     $lastfan = $demand;
     $demand = sprintf("0x%x", $demand);
 #    print "demand = $demand\n";
-    print "--> ipmitool $ipmi_remote raw 0x30 0x30 0x02 0xff $demand\n";
+    print "--> ipmitool (network address) raw 0x30 0x30 0x02 0xff $demand\n";
     system("ipmitool $ipmi_remote raw 0x30 0x30 0x02 0xff $demand") == 0 or return 0;
     # if this fails, want to return telling caller not to think weve
     # made a change
