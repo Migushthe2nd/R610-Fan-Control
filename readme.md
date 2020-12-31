@@ -1,6 +1,6 @@
 # INFO
 
-This is a fork from spacelama's fan control script for the IPMI controller for the Dell PowerEdge R610. Feel free to modify and improve.
+This is a fork from spacelama's fan control script that was improved for the IPMI controller in the the Dell PowerEdge R610. Feel free to modify and improve.
 
 Current changes:
 
