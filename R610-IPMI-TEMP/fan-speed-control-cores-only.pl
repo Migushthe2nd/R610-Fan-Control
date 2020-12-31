@@ -6,7 +6,7 @@ use List::MoreUtils qw( apply );
 use File::Temp qw(tempfile);
 
 my $static_speed_low=0x03;
-my $static_speed_high=0x27;   # this is the speed value at 100% demand
+my $static_speed_high=0x25;   # this is the speed value at 100% demand
                               # ie what we consider the point we don't
                               # really want to get hotter but still
                               # tolerate
@@ -16,10 +16,10 @@ my $ipmi_remote="-I lanplus -H <ip> -U <user> -P <password>";
 my $default_threshold=32;  # the ambient temperature we use above
                            # which we default back to letting the drac
                            # control the fans
-my $base_temp     = 30;    # no fans when below this temp
-my $desired_temp1 = 40;    # aim to keep the temperature below this
-my $desired_temp2 = 45;    # really ramp up fans above this
-my $desired_temp3 = 55;    # really ramp up fans above this
+my $base_temp     = 32;    # no fans when below this temp
+my $desired_temp1 = 42;    # aim to keep the temperature below this
+my $desired_temp2 = 48;    # really ramp up fans above this
+my $desired_temp3 = 58;    # really ramp up fans above this
 my $demand1       = 5;     # prescaled demand at temp1
 my $demand2       = 40;    # prescaled demand at temp2
 my $demand3       = 200;   # prescaled demand at temp3
