@@ -11,6 +11,7 @@ my $static_speed_high=0x27;   # this is the speed value at 100% demand
                               # really want to get hotter but still
                               # tolerate
 my $ipmi_inlet_sensorname="0Eh"; # there are multiple "Ambient Temp" sensors, so use its ID
+my $ipmi_remote="-I lanplus -H <ip> -U <user> -P <password>";
 
 my $default_threshold=32;  # the ambient temperature we use above
                            # which we default back to letting the drac
@@ -75,7 +76,7 @@ sub set_fans_default {
     $lastfan=undef;
     print "--> enable dynamic fan control\n";
     foreach my $attempt (1..10) {
-      system("ipmitool raw 0x30 0x30 0x01 0x01") == 0 and return 1;
+      system("ipmitool $ipmi_remote raw 0x30 0x30 0x01 0x01") == 0 and return 1;
       sleep 1;
       print "  Retrying dynamic control $attempt\n";
     }
@@ -108,7 +109,7 @@ sub set_fans_servo {
   if (!defined $current_mode or $current_mode ne "set") {
     $current_mode="set";
     print "--> disable dynamic fan control\n";
-    system("ipmitool raw 0x30 0x30 0x01 0x00") == 0 or return 0;
+    system("ipmitool $ipmi_remote raw 0x30 0x30 0x01 0x00") == 0 or return 0;
     # if this fails, want to return telling caller not to think weve
     # made a change
   }
@@ -146,8 +147,8 @@ sub set_fans_servo {
     $lastfan = $demand;
     $demand = sprintf("0x%x", $demand);
 #    print "demand = $demand\n";
-    print "--> ipmitool raw 0x30 0x30 0x02 0xff $demand\n";
-    system("ipmitool raw 0x30 0x30 0x02 0xff $demand") == 0 or return 0;
+    print "--> ipmitool $ipmi_remote raw 0x30 0x30 0x02 0xff $demand\n";
+    system("ipmitool $ipmi_remote raw 0x30 0x30 0x02 0xff $demand") == 0 or return 0;
     # if this fails, want to return telling caller not to think weve
     # made a change
   }
@@ -177,7 +178,7 @@ while () {
     @hddtemps=`grep [0-9] < $tempfilename`;
   }
   if (!@ambient_ipmitemps) {
-    @ambient_ipmitemps=`timeout -k 1 20 ipmitool sdr type temperature | grep "$ipmi_inlet_sensorname" | grep [0-9] || echo " | $ambient_temp degrees C"` # ipmitool often fails - just keep using the previous result til it succeeds
+    @ambient_ipmitemps=`timeout -k 1 20 ipmitool $ipmi_remote sdr type temperature | grep "$ipmi_inlet_sensorname" | grep [0-9] || echo " | $ambient_temp degrees C"` # ipmitool often fails - just keep using the previous result til it succeeds
   }
   @coretemps=`timeout -k 1 20 sensors | grep [0-9]`;
   @cputemps=grep {/^Package id/} @coretemps;
