@@ -43,35 +43,25 @@ believe it's only 26 in my un-air conditioned study).
 3. Run the following command to issue IPMI commands:
    `ipmitool -I lanplus -H <iDracip> -U root -P <rootpw> <command>`
 
-**Enable manual/static fan speed:**
-
+**Enable manual/static fan speed:**  
 `raw 0x30 0x30 0x01 0x00`
 
-**Set fan speed:**
-
+**Set fan speed:**  
 (Use i.e http://www.hexadecimaldictionary.com/hexadecimal/0x14/ to calculate speed from decimal to hex)
 
-_3000 RPM_: `raw 0x30 0x30 0x02 0xff 0x10`
-
-_2160 RPM_: `raw 0x30 0x30 0x02 0xff 0x0a`
-
-_1560 RPM_: `raw 0x30 0x30 0x02 0xff 0x09`
-
+_A: 2760 RPM; B: 1920 RPM_: `raw 0x30 0x30 0x02 0xff 0x10`  
 _Note: The RPM may differ from model to model_
 
-**Disable / Return to automatic fan control:**
-
+**Disable / Return to automatic fan control:**  
 `raw 0x30 0x30 0x01 0x01`
 
-**Other: List all output from IPMI**
-
+**Other: List all output from IPMI**  
 `sdr elist all`
 
-**Example of a command:**
-
+**Example of a command:**  
 `ipmitool -I lanplus -H 192.168.0.120 -U root -P calvin raw 0x30 0x30 0x02 0xff 0x10`
 
-**Example of a command in the TrueNAS shell:**
+**Example of a command in the TrueNAS shell:**  
 `ipmitool raw 0x30 0x30 0x02 0xff 0x10`
 
 ---
