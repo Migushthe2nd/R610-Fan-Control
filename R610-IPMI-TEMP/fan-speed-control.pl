@@ -6,11 +6,11 @@ use List::MoreUtils qw( apply );
 use File::Temp qw(tempfile);
 
 my $static_speed_low=0x03;
-my $static_speed_high=0x20;   # this is the speed value at 100% demand
+my $static_speed_high=0x27;   # this is the speed value at 100% demand
                               # ie what we consider the point we don't
                               # really want to get hotter but still
                               # tolerate
-my $ipmi_inlet_sensorname="Inlet Temp";
+my $ipmi_inlet_sensorname="0Eh"; # there are multiple "Ambient Temp" sensors, so use its ID
 
 my $default_threshold=32;  # the ambient temperature we use above
                            # which we default back to letting the drac
