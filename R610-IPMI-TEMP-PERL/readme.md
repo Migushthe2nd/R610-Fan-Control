@@ -1,4 +1,5 @@
 # Fan speed controller for dell R610 etc
+_Author: spacelama_  
 
 Dells don't like having third party cards installed, and ramp up the
 fan speed to jetliner taking off. But you can override this.
@@ -33,42 +34,5 @@ I wrote it the night before Australia's hottest December day on record
 (hey we like our coal fondling prime-ministers). It seems to be
 coping so far now that it has reached that predicted peak (I don't
 believe it's only 26 in my un-air conditioned study).
-
----
-
-# Howto: Manually setting the fan speed of the Dell R610
-
-1. Enable IPMI in iDrac
-2. Install ipmitool on linux, win or mac os
-3. Run the following command to issue IPMI commands:
-   `ipmitool -I lanplus -H <iDracip> -U root -P <rootpw> <command>`
-
-**Enable manual/static fan speed:**  
-`raw 0x30 0x30 0x01 0x00`
-
-**Set fan speed:**  
-(Use i.e http://www.hexadecimaldictionary.com/hexadecimal/0x14/ to calculate speed from decimal to hex)
-
-_A: 2760 RPM; B: 1920 RPM_: `raw 0x30 0x30 0x02 0xff 0x10`  
-_Note: The RPM may differ from model to model_
-
-**Disable / Return to automatic fan control:**  
-`raw 0x30 0x30 0x01 0x01`
-
-**Other: List all output from IPMI**  
-`sdr elist all`
-
-**Example of a command:**  
-`ipmitool -I lanplus -H 192.168.0.120 -U root -P calvin raw 0x30 0x30 0x02 0xff 0x10`
-
-**Example of a command in the TrueNAS shell:**  
-`ipmitool raw 0x30 0x30 0x02 0xff 0x10`
-
----
-
-**Disclaimer**
-TLDR; I take _NO_ responsibility if you mess up anything.
-
----
 
 All of this was inspired by [this Reddit post](https://www.reddit.com/r/homelab/comments/72qust/r510_noise/dnkofsv/) by /u/whitekidney
